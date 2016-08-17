@@ -1,8 +1,8 @@
-#Px-Vis-Spark
+#px-vis-spark
 
 ## Overview
 
-Px-Vis-Spark is a Predix UI component
+px-vis-spark is a Predix UI component that provides a visualization element usually referred to as sparkline - a small line chart without axes or measures that provides a user a glimpse of a trend.
 
 ## Usage
 
@@ -19,19 +19,19 @@ Node, npm and bower are necessary to install the component and dependencies. web
 First, install the component via bower on the command line.
 
 ```
-bower install Px-Vis-Spark --save
+bower install px-vis-spark --save
 ```
 
 Second, import the component to your application with the following tag in your head.
 
 ```
-<link rel="import" href="/bower_components/Px-Vis-Spark/Px-Vis-Spark.html"/>
+<link rel="import" href="/bower_components/px-vis-spark/px-vis-spark.html"/>
 ```
 
 Finally, use the component in your application:
 
 ```
-Insert Your demo code here.
+<px-vis-spark type="line" width="250" height="40" sparkLineData="..."></px-vis-spark>
 ```
 
 <br />
@@ -39,7 +39,7 @@ Insert Your demo code here.
 
 ## documentation
 
-Read the full API and view the demo [here](https://predixdev.github.io/Px-Vis-Spark).
+Read the full API and view the demo here (coming soon).
 
 The documentation in this repository is supplemental to the official Predix documentation, which is continuously updated and maintained by the Predix documentation team. Go to [http://predix.io](http://predix.io)  to see the official Predix documentation.
 
@@ -70,4 +70,4 @@ Navigate to the root of that server (e.g. http://localhost:8080/) in a browser t
 
 ## Known Issues
 
-Please use [Github Issues](https://github.com/PredixDev/Px-Vis-Spark/issues) to submit any bugs you might find.
+Please use [Github Issues](https://github.com/PredixDev/px-vis-spark/issues) to submit any bugs you might find.
