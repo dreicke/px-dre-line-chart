@@ -1,0 +1,139 @@
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. tests, examples), we assume the server is started with
+    'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="css/px-vis-spark-styles.html">
+<link rel="import" href="../px-vis/px-vis-behavior-common.html" />
+<link rel="import" href="../px-vis/px-vis-behavior-d3.html" />
+<link rel="import" href="../px-vis/px-vis-line.html"/>
+<link rel="import" href="../px-vis/px-vis-scale.html"/>
+<link rel="import" href="../px-vis/px-vis-svg.html"/>
+
+<!--
+A visualization element usually referred to as sparkline - a small line chart without axes or measures that provides a user a glimpse of a trend.
+
+##### Usage
+
+    <px-vis-spark type="line" width="250" height="40" sparkLineData="..."></px-vis-spark>
+
+@element px-vis-spark
+@blurb A visualization element usually referred to as a sparkline - a small line chart without axes or measures that provides a user a glimpse of a trend.
+@homepage index.html
+@demo demo.html
+-->
+
+<dom-module id="px-vis-spark">
+  <template>
+    <style include="px-vis-spark-styles"></style>
+    <template is="dom-if" if="{{sparkLineData}}">
+      <div class="flex">
+        <px-vis-svg
+          width="{{width}}"
+          height="{{height}}"
+          svg="{{svg}}"
+          px-svg-elem="{{pxSvgElem}}">
+        </px-vis-svg>
+        <px-vis-scale
+          x-axis-type="time"
+          y-axis-type="linear"
+          complete-series-config="[[_seriesConfig]]"
+          chart-extents="{{_extents}}"
+          width="{{width}}"
+          height="{{height}}"
+          chart-data="{{sparkLineData}}"
+          x="{{x}}"
+          y="{{y}}"
+          current-domain-x="{{currentDomainX}}"
+          current-domain-y="{{currentDomainY}}"
+          selected-domain="[[selectedDomain]]">
+        </px-vis-scale>
+        <px-vis-line
+          svg="[[svg]]"
+          series-id="mySeries"
+          chart-data="[[sparkLineData]]"
+          complete-series-config="[[_seriesConfig]]"
+          x="[[x]]"
+          y="[[y]]"
+          current-domain-x="[[currentDomainX]]"
+          current-domain-y="[[currentDomainY]]">
+        </px-vis-line>
+      </div>
+    </template>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'px-vis-spark',
+
+    properties: {
+      /**
+       * Type of spark - for the time being, "line" is the only option - a future enhancement would be to support sparkscatters or sparkbars.
+       *
+       * @property type
+       * @type String
+       * @default "line"
+       */
+      type: {
+        type: String,
+        value: "line"
+      },
+      /**
+       * Width of the spark component.
+       *
+       * @property width
+       * @type Number
+       * @default 0
+       */
+      width: {
+        type: Number,
+        value: 0
+      },
+      /**
+       * Height of the spark component.
+       *
+       * @property height
+       * @type Number
+       * @default 0
+       */
+      height: {
+        type: Number,
+        value: 0
+      },
+      /**
+       * A JSON array of data that will be drawn in the spark
+       *
+       * @property sparkLineData
+       * @type Array
+       * @default []
+       */
+      sparkLineData: {
+        type: Array,
+        value: function() {return [];}
+      },
+      _seriesConfig: {
+        type: Object,
+        value: {
+          'mySeries': {
+            "name":"My-Series",
+            "type": "line",
+            "x": 'x',
+            "y": 'y',
+            'color': 'rgb(93,165,218)'
+          }
+        }
+      },
+      _extents: {
+        type: Object,
+        value: {
+          "x": [Infinity,-Infinity],
+          "y": [0,-Infinity]
+        }
+      }
+    }
+
+  });
+</script>
