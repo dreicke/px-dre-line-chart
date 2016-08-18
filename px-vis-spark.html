@@ -5,14 +5,15 @@
 -->
 <link rel="import" href="../polymer/polymer.html"/>
 <link rel="import" href="css/px-vis-spark-styles.html">
+<link rel="import" href="../px-vis/px-vis-behavior-chart.html"/>
 <link rel="import" href="../px-vis/px-vis-behavior-common.html" />
-<link rel="import" href="../px-vis/px-vis-behavior-d3.html" />
 <link rel="import" href="../px-vis/px-vis-line.html"/>
 <link rel="import" href="../px-vis/px-vis-scale.html"/>
 <link rel="import" href="../px-vis/px-vis-svg.html"/>
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html" />
 
 <!--
-A visualization element usually referred to as sparkline - a small line chart without axes or measures that provides a user a glimpse of a trend.
+A visualization element usually referred to as a sparkline - a small line chart without axes or measures that provides a user a glimpse of a trend.
 
 ##### Usage
 
@@ -35,7 +36,7 @@ Custom property | Description | Default
   <template>
     <style include="px-vis-spark-styles"></style>
     <template is="dom-if" if="{{sparkLineData}}">
-      <div class="flex">
+      <div id="wrapper" class="wrapper flex">
         <px-vis-svg
           width="{{width}}"
           height="{{height}}"
@@ -76,6 +77,12 @@ Custom property | Description | Default
 
     is: 'px-vis-spark',
 
+    behaviors: [
+      PxVisBehavior.sizing,
+      PxVisBehaviorChart.chartAutoResize,
+      Polymer.IronResizableBehavior
+    ],
+
     properties: {
       /**
        * Type of spark - for the time being, "line" is the only option - a future enhancement would be to support sparkscatters or sparkbars.
@@ -89,37 +96,24 @@ Custom property | Description | Default
         value: "line"
       },
       /**
-       * Width of the spark component.
-       *
-       * @property width
-       * @type Number
-       * @default 0
-       */
-      width: {
-        type: Number,
-        value: 0
-      },
-      /**
-       * Height of the spark component.
-       *
-       * @property height
-       * @type Number
-       * @default 0
-       */
-      height: {
-        type: Number,
-        value: 0
-      },
-      /**
-       * A JSON array of data that will be drawn in the spark
+       * A JSON array of data that will be drawn in the spark.
        *
        * @property sparkLineData
        * @type Array
        * @default []
        */
       sparkLineData: {
-        type: Array,
-        value: function() {return [];}
+        type: Array
+      },
+      /**
+       * Whether the sparkline should resize as window size is adjusted.
+       * @property preventResize
+       * @type Boolean
+       * @value false
+       */
+      preventResize:{
+        type:Boolean,
+        value:false
       },
       _seriesConfig: {
         type: Object,
@@ -140,6 +134,22 @@ Custom property | Description | Default
           "y": [0,-Infinity]
         }
       }
+    },
+    listeners: {
+      'iron-resize': '_onIronResize'
+    },
+    _onIronResize: function() {
+      if (this.preventResize){
+        return;
+      }
+      this.debounce('ironresize', function() {
+        var wrapperRect = this.$$('#wrapper').getBoundingClientRect();
+        this.set('width', wrapperRect.width);
+        this.set('height', wrapperRect.height);
+      },50);
+    },
+    attached: function() {
+      this._onIronResize();
     }
 
   });

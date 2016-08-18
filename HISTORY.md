@@ -1,3 +1,7 @@
+v0.0.3
+==================
+* Fixed resizing, added new demo
+
 v0.0.2
 ==================
 * Added faint top and bottom borders as default / configurable style
