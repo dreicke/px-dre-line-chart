@@ -36,11 +36,10 @@ Predix branding rules go in px-vis-spark-predix.scss, not in this file.
 
 
 // Component
-@import "_variables.scss";
-px-vis-svg {
-  border-top: $px-vis-spark-borders;
-  border-bottom: $px-vis-spark-borders;
+.simpleBar {
+  --px-positive-fill : $dv-basic-blue;
 }
+
 
 // Trumps
 @import "inuit-clearfix/_trumps.clearfix.scss";

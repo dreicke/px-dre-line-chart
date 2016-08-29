@@ -1,5 +1,6 @@
-#px-vis-spark
+#px-vis-spark [![Build Status](https://travis-ci.org/PredixDev/px-vis-spark.svg?branch=master)](https://travis-ci.org/PredixDev/px-vis-spark)
 
+[![px-vis-spark demo](https://predixdev.github.io/px-vis-spark/px-vis-spark/px-vis-spark.png)](https://github.com/PredixDev/px-vis-spark)
 ## Overview
 
 px-vis-spark is a Predix UI component that provides a visualization element usually referred to as sparkline - a small line chart without axes or measures that provides a user a glimpse of a trend.
@@ -31,13 +32,17 @@ Second, import the component to your application with the following tag in your 
 Finally, use the component in your application:
 
 ```
-<px-vis-spark type="line" width="250" height="40" sparkLineData="..."></px-vis-spark>
+<px-vis-spark type="line" width="250" height="40" data='[{"x":0,"y":0},...]'></px-vis-spark>
+// and/or:
+<px-vis-spark type="bar" width="250" height="50" data="[1,2,3]"></px-vis-spark>
+// and/or:
+<px-vis-spark type="winLoss" width="300" height="50" data="[1,-2,3]"></px-vis-spark>
 ```
 
 <br />
 <hr />
 
-## documentation
+## Documentation
 
 Read the full API and view the demo here (coming soon).
 
@@ -60,7 +65,9 @@ From the component's directory, to start a local server run:
 $ gulp serve
 ```
 
-Navigate to the root of that server (e.g. http://localhost:8080/) in a browser to open the API documentation page, with link to the "Demo" / working examples.
+The root of that server (e.g. http://localhost:8080/) will automatically open in your default browser with the API documentation page and interactive working examples.
+
+`gulp serve` also runs `gulp watch` concurrently so that when you make a change to your source files and save them, your preview will be updated in any browsers you have opened and turned on in LiveReload.
 
 ### GE Coding Style Guide
 [GE JS Developer's Guide](https://github.com/GeneralElectric/javascript)

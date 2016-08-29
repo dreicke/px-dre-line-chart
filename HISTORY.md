@@ -1,3 +1,7 @@
+v0.0.4
+==================
+* Added new visualization types for bar and win/loss
+
 v0.0.3
 ==================
 * Fixed resizing, added new demo

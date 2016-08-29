@@ -21,7 +21,7 @@
     <px-vis-spark id="spark"></px-vis-spark>
 
     <script>
-    var sparkLineData = [{
+    var data = [{
         'x': 1397102460000,
         'y': 0.56
       },{
@@ -59,7 +59,7 @@
         'y': 0.32
     }];
     var spark = document.querySelector("#spark");
-    spark.setAttribute("spark-line-data", JSON.stringify(sparkLineData));
+    spark.setAttribute("data", JSON.stringify(data));
     </script>
   </body>
 

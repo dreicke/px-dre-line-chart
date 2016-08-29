@@ -1,8 +1,8 @@
 {
     "name": "px-vis-spark",
     "author": "General Electric",
-    "description": "A Px sparkline component",
-    "version": "0.0.3",
+    "description": "A visualization element usually referred to as a sparkline - a small line chart or bar chart without axes or measures that provides a user a glimpse of a trend.",
+    "version": "0.0.4",
     "private": true,
     "extName" : null,
     "repository" :
