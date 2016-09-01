@@ -1,3 +1,7 @@
+v0.0.5
+==================
+* Fixed demo page for IE
+
 v0.0.4
 ==================
 * Added new visualization types for bar and win/loss
