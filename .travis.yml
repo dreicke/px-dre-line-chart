@@ -1,3 +1,30 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+- stable
+branches:
+  except:
+  - gh-pages
+addons:
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
+before_script:
+- npm install web-component-tester
+- npm install bower
+- export PATH=$PWD/node_modules/.bin:$PATH
+- bower install
+script:
+- xvfb-run wct --skip-plugin sauce
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin
+  local; fi
+env:
+  global:
+  - secure: VVS6jZXYsvV9vPB5ZrAAkOeRCU6AY5qCIP/EdJAKpTFqkA6B1kzU36ZSYpTumScqFIE6aYCVuM03sI86W175EjzaMTj+E0OT4VzMYcTI1yvuFMEXMD7lGBw7QzD9ctBZuNHRRyhMG/JdlgrWkWB2prCNE50MrUaHAvwZA0f3OtQa3ZLUONL9pMKRKo0i0vnjfWzx3VELB4qpqW8L86gQniu2RCY38znVY2Xwg4nUW8t34l5I0K9oU1GcFDlD110ism1s9KVzCTAHwMjuK0U3p1DB42EIpxQPdDOdmRxgZd3cuwOmmeJCfjRrGwAIhxgOBjbJnXy1Q/6iqHZZmh6UJTkVQwKZXDXO9NpMckAdcvN0F2m/xNcJubFGo7yzOsPN7sR3+WO6tRP9uAuTB/RE3R1ha1lDI7a8EzhPwWBz2QVZDUAdtXGQ95hb0DAFTIUKYWU8ihgJe6a4Fhcloh0AK/0ALVIwRCeT2fN+M9QV2SnoctW818JKU/pnNNWB6p+kuI2tG67TcSrOCXIZ5UmvdrjAdrRuHjKCx+V1yQDvqXXtOhVPr9nLmFQQDFdYNdlIiT1z4Eh4+sJXmML4vJSLwJGjhgTtIYfKKzZ4xCytlLcdTEbSPsJC15qyj0YkamJLtAjWOoZBLv15s3SnzzBU1Ro6QCIidEQKVWz0IdcIx+c=
+  - secure: bc9mjF+B6FeKdP9rq6lerfbYgDYno53I9B9pJ2zXmePPeb6otmzOwYM4HrSqBeyrZWOqCJzTgJsYdLcH4cIUtdCqNtdlBOdKq1bF3MvfUH4Gk5FsypN/f+WUqM6K+urgc1jRYSA+x7g4EGkSu3Odl8pJwmovW3IWd2kxZgqGvZvwUlit9X61XMWUKs9SPJflMen6KY7SgLK+6p9kIC1qjvN164bsHOiJCsWdLl7yAC3pBfBwGgwJUxoKXs60i5PJcFE/GWkJ9d/6K07Pb5DKWkKM5yX/MSRJ49uo932C71uWEl6gSquPEWx62Q5cxHwFdlxKxke3A+Adc5BKFVMiJQPvZgoh7+83GMFpukZEjCg8P7YWQELooIVQD1dJ9SKA8PBCG8S6ZliOg1gxK0NgLTAkWXrnc8ptvcDf3SWCOjqoWKDSA/aO4/yXzw99yiakpQa8V6inA+jNWoh9SMxH18gCHKiy/5SINZLRJs0udkPNmoD2eLS9aZvbzxeWdCnA3tIBqQdQEmpI9yazrIh7UXJPmKeD1/uNUrXeTyJOcU7HiQhjlgKxOfsZRzl3M+90vEY7zek99VBNSoDpuHVakhmKM0VPJOyZcQ0EuL1ToGJk4lqu42pPosmTiZUQLjvWm+Z/pUpPOEAidOiYNRL9WASBMAKrinwnSuw4uN/HDEA=
 before_install:
 - if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then openssl aes-256-cbc -k "$password"
   -in id_rsa.enc -out deploy_key -d; fi
@@ -5,6 +32,3 @@ after_success:
 - cd $TRAVIS_BUILD_DIR/scripts
 - chmod 755 ghp.sh
 - ./ghp.sh
-env:
-  global:
-    secure: Fred2Cbx5who4Tk1v4IOVyJNyDCpquRBZMiM++8UpN6DJQhlIHyzM+iXJlmTYPhn+zBOWWF5b5QC0Uq15enfImnVTiza30/ZmzKAlud2FRhvaVoa3mPtK1CSXVhhlKu95qKL/ZOlPadVAp6e3ABlkzKTaw7xFth2r3nt66v434e65Zf6a68GMPlV+1hTeYVg4GYhX8U/gV1nlcWqf56s14+bMW+lPuxkBsUd9lreqSeDWPXHDhRUU8sniShdr6TnyJKOlSwqYj98DVo/4LxZzd9iU4aNVnFFIsDl9SFeq5N0+H9gFEkknALp2s+AquThmpYlCLOtGngv+Of8nMR5NUXJxx/Gooo0ZRC/ti65tMgv19iAjneoavmCiiIWKjbapuwPtl9HB0gf4FQaIS7VolyWU34qF0R+cYNGXXOYZYBj1WyrMpW4iFn+Sw9Hg8/CMHXj/+dgrzjIPRYbjb01/PRzyK1ZKt1UTw7Ey7E9xFrIIaWOVjxcV+095tHXNOzpy9J3AUoYNR2LoRGNxxqEnB38BwT3oXu1dL04WbWW4rw8YoGSWfhPaOQ3iiJFSe+zoRA6JZ5d3a9BIOpt7Dx7I3tx1ao6ILNNaY+d6jnezj4GrbhaC29/V1tdds/Ha17bxjY9y+cXlVF6t+oWbyxDGJjAuROTUudXLtfvtAzVSMY=
