@@ -1,3 +1,7 @@
+v0.0.6
+==================
+* Added auto_ghp
+
 v0.0.5
 ==================
 * Fixed demo page for IE
