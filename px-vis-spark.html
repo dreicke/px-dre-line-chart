@@ -36,8 +36,7 @@ A visualization element usually referred to as a sparkline - a small line chart 
           <px-vis-svg
             width="{{width}}"
             height="{{height}}"
-            svg="{{svg}}"
-            px-svg-elem="{{pxSvgElem}}">
+            svg="{{svg}}">
           </px-vis-svg>
           <px-vis-scale
             x-axis-type="time"
@@ -49,6 +48,7 @@ A visualization element usually referred to as a sparkline - a small line chart 
             chart-data="{{data}}"
             x="{{x}}"
             y="{{y}}"
+            domain-changed="{{domainChanged}}"
             current-domain-x="{{currentDomainX}}"
             current-domain-y="{{currentDomainY}}"
             selected-domain="[[selectedDomain]]">
@@ -60,8 +60,7 @@ A visualization element usually referred to as a sparkline - a small line chart 
             complete-series-config="[[_seriesConfig]]"
             x="[[x]]"
             y="[[y]]"
-            current-domain-x="[[currentDomainX]]"
-            current-domain-y="[[currentDomainY]]">
+            domain-changed="[[domainChanged]]">
           </px-vis-line>
         </template>
         <template is="dom-if" if="{{_isEqual(type,'bar')}}">
