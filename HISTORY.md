@@ -1,3 +1,11 @@
+v0.1.3
+==================
+* Upgraded to vis 0.6.0
+
+v0.1.2
+==================
+* Upgrade and fixes for vis 0.5.0
+
 v0.1.1
 ==================
 * Commented out failing unit tests around resize
