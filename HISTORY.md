@@ -1,3 +1,7 @@
+v0.1.4
+==================
+* Added math.max check to width and height
+
 v0.1.3
 ==================
 * Upgraded to vis 0.6.0

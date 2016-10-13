@@ -196,8 +196,8 @@ var defaultData = [{
       }
       this.debounce('ironresize', function() {
         var wrapperRect = this.$$('#wrapper').getBoundingClientRect();
-        this.set('width', wrapperRect.width);
-        this.set('height', wrapperRect.height);
+        this.set('width', Math.max(wrapperRect.width,0));
+        this.set('height', Math.max(wrapperRect.height,0));
       },1500);
     },
     _isEqual: function(a, b) {
