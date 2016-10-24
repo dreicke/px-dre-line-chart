@@ -1,6 +1,6 @@
 {
   "name": "px-vis-spark",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": [
     "px-vis-spark.html"
   ],
@@ -30,14 +30,9 @@
     "px-api-viewer": "^0.1.0",
     "px-demo-snippet": "^0.6.4",
     "px-toggle-design": "^0.2.12",
-    "px-actionable-text-icons-design": "^0.0.3",
+    "px-actionable-text-icons-design": "^0.1.0",
     "px-headings-design": "^0.2.14",
     "px-code-design": "~0.2.11",
     "px-list-inline-design": "^0.2.11"
-  },
-  "resolutions": {
-    "px-theme": "^1.1.2",
-    "px-typography-design": "^1.1.0",
-    "px-tooltip": "~0.7.0"
   }
 }

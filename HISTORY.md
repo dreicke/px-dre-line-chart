@@ -1,3 +1,7 @@
+v0.1.5
+==================
+* fixed missing dependencies
+
 v0.1.4
 ==================
 * Added math.max check to width and height
