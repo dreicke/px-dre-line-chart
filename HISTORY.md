@@ -1,3 +1,7 @@
+v0.1.6
+==================
+* removed default data from component
+
 v0.1.5
 ==================
 * fixed missing dependencies

@@ -85,25 +85,6 @@ A visualization element usually referred to as a sparkline - a small line chart 
 </dom-module>
 
 <script>
-var defaultData = [{
-    'x': 1397102460000,
-    'y': 0.56
-  },{
-    'x': 1397139660000,
-    'y': 0.4
-  },{
-    'x': 1397177400000,
-    'y': 0.43
-  },{
-    'x': 1397228040000,
-    'y': 0.33
-  },{
-    'x': 1397248260000,
-    'y': 0.47
-  },{
-    'x': 1397291280000,
-    'y': 0.41
-  }];
 
   Polymer({
 
@@ -136,8 +117,7 @@ var defaultData = [{
        * @default []
        */
       data: {
-        type: Array,
-        value: defaultData
+        type: Array
       },
       /**
        * Whether the vis-spark should resize as window size is adjusted.
@@ -198,7 +178,7 @@ var defaultData = [{
         var wrapperRect = this.$$('#wrapper').getBoundingClientRect();
         this.set('width', Math.max(wrapperRect.width,0));
         this.set('height', Math.max(wrapperRect.height,0));
-      },1500);
+      },50);
     },
     _isEqual: function(a, b) {
       return a===b ? true : false;
