@@ -1,3 +1,7 @@
+v0.1.7
+==================
+* add sparkline data to test fixture
+
 v0.1.6
 ==================
 * removed default data from component
