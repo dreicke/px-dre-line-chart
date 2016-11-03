@@ -117,7 +117,8 @@ A visualization element usually referred to as a sparkline - a small line chart 
        * @default []
        */
       data: {
-        type: Array
+        type: Array,
+        observer: '_dataChanged'
       },
       /**
        * Whether the vis-spark should resize as window size is adjusted.
@@ -182,6 +183,9 @@ A visualization element usually referred to as a sparkline - a small line chart 
     },
     _isEqual: function(a, b) {
       return a===b ? true : false;
+    },
+    _dataChanged: function() {
+      this.set("_extents", {"x": [Infinity,-Infinity],"y": [0,-Infinity]});
     },
     attached: function() {
       this._onIronResize();

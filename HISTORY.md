@@ -1,3 +1,7 @@
+v0.1.8
+==================
+* fixed #1, chart extents update when data changes
+
 v0.1.7
 ==================
 * add sparkline data to test fixture
