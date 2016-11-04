@@ -89,7 +89,9 @@
                   <div>
                     <px-demo-snippet
                       element-properties={{item}}
-                      element-name="px-vis-spark">
+                      element-name="px-vis-spark"
+                      links-includes="[[linksIncludes]]"
+                      >
                     </px-demo-snippet>
                   </div>
                 </div>
@@ -202,6 +204,9 @@ window.addEventListener('WebComponentsReady', function() {
   template.indexPlusOne = indexPlusOne;
   template.data1 = data1;
   template.data2 = data2;
+
+  template.linksIncludes = ['px-vis/px-polygit-imports-vis.html', 'px-datetime-common/px-polygit-imports-datetime.html'];
+
 });
 </script>
 

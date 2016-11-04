@@ -1,3 +1,7 @@
+v0.1.9
+==================
+* added vis polygit imports to codepen
+
 v0.1.8
 ==================
 * fixed #1, chart extents update when data changes
