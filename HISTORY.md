@@ -1,3 +1,8 @@
+
+v0.1.10
+==================
+* bower updating px-demo-snippet
+
 v0.1.9
 ==================
 * added vis polygit imports to codepen
