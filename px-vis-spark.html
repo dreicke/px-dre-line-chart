@@ -5,7 +5,7 @@
 -->
 <link rel="import" href="../polymer/polymer.html"/>
 <link rel="import" href="css/px-vis-spark-styles.html">
-<link rel="import" href="../px-vis/px-vis-line.html"/>
+<link rel="import" href="../px-vis/px-vis-line-svg.html"/>
 <link rel="import" href="../px-vis/px-vis-scale.html"/>
 <link rel="import" href="../px-vis/px-vis-svg.html"/>
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html" />
@@ -42,18 +42,16 @@ A visualization element usually referred to as a sparkline - a small line chart 
             x-axis-type="time"
             y-axis-type="linear"
             complete-series-config="[[_seriesConfig]]"
-            chart-extents="{{_extents}}"
+            data-extents="{{_extents}}"
             width="{{width}}"
             height="{{height}}"
             chart-data="{{data}}"
             x="{{x}}"
             y="{{y}}"
             domain-changed="{{domainChanged}}"
-            current-domain-x="{{currentDomainX}}"
-            current-domain-y="{{currentDomainY}}"
             selected-domain="[[selectedDomain]]">
           </px-vis-scale>
-          <px-vis-line
+          <px-vis-line-svg
             svg="[[svg]]"
             series-id="mySeries"
             chart-data="[[data]]"
@@ -61,7 +59,7 @@ A visualization element usually referred to as a sparkline - a small line chart 
             x="[[x]]"
             y="[[y]]"
             domain-changed="[[domainChanged]]">
-          </px-vis-line>
+          </px-vis-line-svg>
         </template>
         <template is="dom-if" if="{{_isEqual(type,'bar')}}">
           <px-simple-win-loss-chart

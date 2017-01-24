@@ -1,3 +1,7 @@
+v1.0.0
+==================
+* Upgrading to px-vis v1.0.0
+
 v0.2.1
 ==================
 * changing ghp.sh to account for Alpha releases
