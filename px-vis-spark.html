@@ -170,10 +170,11 @@ A visualization element usually referred to as a sparkline - a small line chart 
       'iron-resize': '_onIronResize'
     },
     _onIronResize: function() {
-      if (this.preventResize){
-        return;
-      }
       this.debounce('ironresize', function() {
+        if(this.preventResize){
+          return;
+        }
+
         var wrapperRect = this.$$('#wrapper').getBoundingClientRect();
         this.set('width', Math.max(wrapperRect.width,0));
         this.set('height', Math.max(wrapperRect.height,0));
