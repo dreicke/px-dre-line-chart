@@ -1,3 +1,7 @@
+v1.0.1
+==================
+* Support data vis color theming
+
 v1.0.0
 ==================
 * Upgrading to px-vis v1.0.0
