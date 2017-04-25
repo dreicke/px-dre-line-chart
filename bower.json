@@ -5,6 +5,7 @@
         "px-vis-spark.html"
     ],
     "ignore": [
+    "*.enc",
       "**/.*",
       "node_modules",
       "bower_components",
