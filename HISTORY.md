@@ -1,3 +1,7 @@
+v1.0.2
+==================
+* fix imports and dependencies per #6
+
 v1.0.1
 ==================
 * Support data vis color theming
