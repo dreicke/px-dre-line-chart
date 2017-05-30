@@ -12,22 +12,11 @@
 <link rel="import" href="../px-vis/px-vis-tooltip.html"/>
 <link rel="import" href="../px-vis/px-vis-interaction-space.html"/>
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html" />
-<link rel="import" href="../px-simple-win-loss-chart/px-simple-win-loss-chart.html" />
-<link rel="import" href="../px-vis/px-vis-behavior-common.html"/>
 <link rel="import" href="../px-vis/px-vis-behavior-chart.html" />
 <link rel="import" href="../px-vis/px-vis-behavior-d3.html" />
 <link rel="import" href="../px-colors-design/colors.html"/>
 
 <!--
-A visualization element usually referred to as a sparkline - a small line chart without axes or measures that provides a user a glimpse of a trend.
-
-##### Usage
-
-    <px-vis-spark type="line" width="250" height="40" data='[{"x":0,"y":0},...]'></px-vis-spark>
-    <px-vis-spark type="bar" width="250" height="50" data="[1,2,3]"></px-vis-spark>
-    <px-vis-spark type="winLoss" width="300" height="50" data="[1,-2,3]"></px-vis-spark>
-
-
 @element px-vis-spark
 @blurb A visualization element usually referred to as a sparkline - a small line chart or bar chart without axes or measures that provides a user a glimpse of a trend.
 @homepage index.html
@@ -35,11 +24,10 @@ A visualization element usually referred to as a sparkline - a small line chart 
 -->
 
 <dom-module id="px-vis-spark">
-  <template>
     <style include="px-vis-spark-styles"></style>
-    <template is="dom-if" if="{{data}}">
-      <div id="wrapper" class="wrapper flex">
-        <template is="dom-if" if="{{_isEqual(type,'line')}}">
+      <div id="wrapper" class="wrapper flex" >
+        <template>
+        <div class="outline" on-mousemove="_calcMousePos">
           <px-vis-svg
             width="[[width]]"
             height="[[height]]"
@@ -61,7 +49,7 @@ A visualization element usually referred to as a sparkline - a small line chart 
             selected-domain="[[selectedDomain]]">
           </px-vis-scale>
           <px-vis-line-svg
-            svg="[[svg]]"
+            svg="[[layer.0]]"
             series-id="mySeries"
             chart-data="[[data]]"
             complete-series-config="[[_seriesConfig]]"
@@ -70,7 +58,7 @@ A visualization element usually referred to as a sparkline - a small line chart 
             domain-changed="[[domainChanged]]">
           </px-vis-line-svg>
           <px-vis-axis 
-            svg="[[svg]]" 
+            svg="[[layer.0]]" 
             axis="[[y]]" 
             margin="[[margin]]" 
             width="[[width]]" 
@@ -78,13 +66,13 @@ A visualization element usually referred to as a sparkline - a small line chart 
             title="Amount" 
             orientation="left" 
             label-position="center" 
-            complete-series-config="[[seriesConfig]]" 
+            complete-series-config="[[_seriesConfig]]" 
             muted-series="[[mutedSeries]]" 
             domain-changed="[[domainChanged]]"  
             draw-series-bar="[[drawSeriesBar]]">
           </px-vis-axis>
           <px-vis-axis 
-            svg="[[svg]]" 
+            svg="[[layer.0]]" 
             axis="[[x]]" 
             margin="[[margin]]" 
             width="[[width]]" 
@@ -92,58 +80,42 @@ A visualization element usually referred to as a sparkline - a small line chart 
             title="Time" 
             orientation="bottom" 
             label-position="center" 
-            complete-series-config="[[seriesConfig]]" 
+            complete-series-config="[[_seriesConfig]]" 
             muted-series="[[mutedSeries]]" 
             domain-changed="[[domainChanged]]"  
             draw-series-bar="[[drawSeriesBar]]"
             label-type-size="9">
           </px-vis-axis>
           <px-vis-interaction-space
-              x-axis-type="time"
-              svg="[[svg]]"
-              width="[[width]]"
-              height="[[height]]"
-              margin="[[margin]]"
-              chart-data="[[chartData]]"
-              x="[[x]]"
-              y="[[y]]"
-              complete-series-config="[[seriesConfig]]"
-              tooltip-data="{{tooltipData}}"
-              extents-data="{{extentsData}}"
-              mouse-rect="{{mouseRect}}">
+            x-axis-type="time"
+            svg="[[layer.1]]"
+            width="[[width]]"
+            height="[[height]]"
+            margin="[[margin]]"
+            chart-data="[[data]]"
+            x="[[x]]"
+            y="[[y]]"
+            complete-series-config="[[_seriesConfig]]"
+            tooltip-data="{{tooltipData}}"
+            extents-data="{{extentsData}}"
+            domain-changed="[[domainChanged]]"
+            mouse-rect="{{mouseRect}}">
           </px-vis-interaction-space>
           <px-vis-tooltip
-              hover-target=[[mouseRect]]
-              mouse-position="[[mousePosition]]"
-              width="250"
-              margin="[[margin]]"
-              chart-data="[[chartData]]"
-              tooltip-data="[[tooltipData]]"
-              complete-series-config="[[completeSeriesConfig]]"
-              x-axis-type="time"
-              tooltip-style="light"
-              muted-series="[[mutedSeries]]">
+            hover-target=[[mouseRect]]
+            mouse-position="[[mousePosition]]"
+            width="250"
+            margin="[[margin]]"
+            chart-data="[[data]]"
+            tooltip-data="[[tooltipData]]"
+            complete-series-config="[[_seriesConfig]]"
+            x-axis-type="time"
+            tooltip-style="light"
+            muted-series="[[mutedSeries]]">
           </px-vis-tooltip>
-        </template>
-        <template is="dom-if" if="{{_isEqual(type,'bar')}}">
-          <px-simple-win-loss-chart
-            class="simpleBar"
-            chart-data="{{data}}"
-            width="{{width}}"
-            height="{{height}}">
-          </px-simple-win-loss-chart>
-        </template>
-        <template is="dom-if" if="{{_isEqual(type,'winLoss')}}">
-          <px-simple-win-loss-chart
-            class="simpleWinLoss"
-            chart-data="{{data}}"
-            width="{{width}}"
-            height="{{height}}">
-          </px-simple-win-loss-chart>
+        </div>
         </template>
       </div>
-    </template>
-  </template>
 </dom-module>
 
 <script>
@@ -154,38 +126,16 @@ A visualization element usually referred to as a sparkline - a small line chart 
 
     behaviors: [
       Polymer.IronResizableBehavior,
-      PxColorsBehavior.dataVisColors,
       PxColorsBehavior.dataVisColorTheming,
       PxVisBehavior.getSeriesColors,
-      PxVisBehaviorChart.chartCommon,
-      PxVisBehaviorD3.svg,
-      PxVisBehaviorD3.axis,
-      PxVisBehaviorD3.axisConfig,
-      PxVisBehavior.sizing,
-      PxVisBehavior.completeSeriesConfig,
-      PxVisBehaviorD3.domainUpdate,
-      PxVisBehavior.tooltipData,
-      PxVisBehavior.preventInitialDrawing,
       PxVisBehaviorChart.layers,
     ],
 
     properties: {
-      /**
-       * Type of spark - one of "line", "bar" or "winLoss".
-       *
-       * @property type
-       * @type String
-       * @default "line"
-       */
-      type: {
-        type: String,
-        value: "line"
-      },
+
       /**
        * A JSON array of data that will be drawn in the spark.
-       * Spark type 'line' requires data in the format `[{"x":0, "y":0},...]`.
-       * Spark type 'bar' requires a single series of positive values in the format `[1,2,3]`.
-       * Spark type 'winLoss' requires a single series of positive/negative values in the format `[1,-2,3]`.
+       * Requires data in the format `[{"x":0, "y":0},...]`.
        *
        * @property data
        * @type Array
@@ -196,34 +146,8 @@ A visualization element usually referred to as a sparkline - a small line chart 
         observer: '_dataChanged'
       },
 
-      // tooltipData: {
-      //   type: Object,
-      //   value: {
-      //       "time": "2015-03-25T20:34:47.085Z",
-      //       "hidden": false,
-      //       "series":[{
-      //          "name":"seriesId1",
-      //          "coord":[xCoord1, yCoord1],  //in pixel space
-      //          "value":{
-      //              "x":xVal1,             //in data space
-      //              "seriesId1":yVal1    //in data space
-      //          }
-      //      },{
-      //          "name":"seriesId2",
-      //          "coord":[xCoord2, yCoord2],  //in pixel space
-      //          "value":{
-      //              "x":xVal2,             //in data space
-      //              "seriesId2":yVal2    //in data space
-      //          },
-      //      }],
-      //       "mouse":[ mouseX, mouseY ],   //in pixel space
-      //       "xArr":[xCoord1 , xCoord2],   //in pixel space
-      //      "yArr":[yCoord1 , yCoord2],   //in pixel space
-      //    },
-      //   },
-
       /**
-       * Whether the vis-spark should resize as window size is adjusted.
+       * Whether the chart should resize as window size is adjusted.
        * @property preventResize
        * @type Boolean
        * @value false
@@ -233,22 +157,22 @@ A visualization element usually referred to as a sparkline - a small line chart 
         value: false
       },
       /**
-      * Width of the spark.
+      * Width of the chart.
       * @prop width
       * @type String
       */
       width: {
-          type: String,
-          value: "300"
+          type: Number,
+          value: 300
       },
       /**
-      * Height of the spark.
+      * Height of the chart.
       * @prop height
       * @type String
       */
       height: {
-          type: String,
-          value: "50"
+          type: Number,
+          value: 50
       },
       margin: {
           type: Object,
@@ -259,23 +183,27 @@ A visualization element usually referred to as a sparkline - a small line chart 
             "bottom":70
           }
       },
+
       _seriesConfig: {
         type: Object
       },
+
       extentsData: {
         type: Object,
         value: {
           "x": [Infinity,-Infinity],
           "y": [0,-Infinity]
         }
+      },
+      mousePosition:{
+        type: Array
       }
     },
+
     listeners: {
       'iron-resize': '_onIronResize',
       "px-data-vis-colors-applied" : '_generateSeriesConfig'
     },
-
-
 
     _onIronResize: function() {
       this.debounce('ironresize', function() {
@@ -288,11 +216,9 @@ A visualization element usually referred to as a sparkline - a small line chart 
         this.set('height', Math.max(wrapperRect.height,0));
       },50);
     },
-    _isEqual: function(a, b) {
-      return a===b ? true : false;
-    },
+
     _dataChanged: function() {
-      this.set("_extents", {"x": [Infinity,-Infinity],"y": [0,-Infinity]});
+      this.set("extentsData", {"x": [Infinity,-Infinity],"y": [0,-Infinity]});
     },
     attached: function() {
       this._onIronResize();
@@ -317,7 +243,8 @@ A visualization element usually referred to as a sparkline - a small line chart 
           'color': this._getColor(0)
         }
       })
-      console.log(this._rect);
+
+      
     }
 
   });
