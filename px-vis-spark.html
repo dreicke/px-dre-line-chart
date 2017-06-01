@@ -27,6 +27,18 @@
       <div id="wrapper" class="wrapper flex" >
         <template>
         <div class="outline" on-mousemove="_calcMousePos">
+          <px-vis-register
+            width="[[width]]"
+            height="175"
+            margin="[[margin]]"
+            type="[[type]]"
+            complete-series-config="[[_seriesConfig]]"
+            tooltip-data=[[tooltipData]]
+            muted-series="{{mutedSeries}}"
+            x-axis-type="time"
+            y-axis-type="linear"
+            chart-data="[[data]]">
+          </px-vis-register>
           <px-vis-svg
             width="[[width]]"
             height="[[height]]"
@@ -121,6 +133,7 @@
             tooltip-style="light"
             muted-series="[[mutedSeries]]">
           </px-vis-tooltip>
+          
         </div>
         </template>
       </div>
