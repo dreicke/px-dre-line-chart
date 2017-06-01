@@ -10,6 +10,7 @@
 <link rel="import" href="../px-vis/px-vis-svg.html"/>
 <link rel="import" href="../px-vis/px-vis-tooltip.html"/>
 <link rel="import" href="../px-vis/px-vis-interaction-space.html"/>
+<link rel="import" href="../px-vis/px-vis-cursor.html"/>
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html" />
 <link rel="import" href="../px-vis/px-vis-behavior-chart.html" />
 <link rel="import" href="../px-vis/px-vis-behavior-d3.html" />
@@ -119,9 +120,10 @@
             tooltip-data="{{tooltipData}}"
             extents-data="{{extentsData}}"
             domain-changed="[[domainChanged]]"
-            mouse-rect="{{mouseRect}}">
+            mouse-rect="{{mouseRect}}"
+            series-keys="[[seriesKeys]]">
           </px-vis-interaction-space>
-          <px-vis-tooltip
+<!--           <px-vis-tooltip
             hover-target=[[mouseRect]]
             mouse-position="[[mousePosition]]"
             width="250"
@@ -132,7 +134,17 @@
             x-axis-type="time"
             tooltip-style="light"
             muted-series="[[mutedSeries]]">
-          </px-vis-tooltip>
+          </px-vis-tooltip> -->
+          <px-vis-cursor
+            svg="[[layer.1]]"
+            width="[[width]]"
+            height="[[height]]"
+            margin="[[margin]]"
+            complete-series-config="[[_seriesConfig]]"
+            chart-data="[[data]]"
+            tooltip-data="[[tooltipData]]"
+            selection-type=[[selectionType]]>
+          </px-vis-cursor>
           
         </div>
         </template>
