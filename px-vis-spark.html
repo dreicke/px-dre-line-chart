@@ -4,7 +4,6 @@
     'gulp serve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
 -->
 <link rel="import" href="../polymer/polymer.html"/>
-<link rel="import" href="css/px-vis-spark-styles.html">
 <link rel="import" href="../px-vis/px-vis-line-svg.html"/>
 <link rel="import" href="../px-vis/px-vis-scale.html"/>
 <link rel="import" href="../px-vis/px-vis-axis.html"/>
@@ -50,7 +49,17 @@
           </px-vis-scale>
           <px-vis-line-svg
             svg="[[layer.0]]"
-            series-id="mySeries"
+            series-id="y0"
+            chart-data="[[data]]"
+            complete-series-config="[[_seriesConfig]]"
+            x="[[x]]"
+            y="[[y]]"
+            domain-changed="[[domainChanged]]"
+            stroke-width="2">
+          </px-vis-line-svg>
+          <px-vis-line-svg
+            svg="[[layer.0]]"
+            series-id="y1"
             chart-data="[[data]]"
             complete-series-config="[[_seriesConfig]]"
             x="[[x]]"
@@ -68,8 +77,7 @@
             label-position="center" 
             complete-series-config="[[_seriesConfig]]" 
             muted-series="[[mutedSeries]]" 
-            domain-changed="[[domainChanged]]"  
-            draw-series-bar="[[drawSeriesBar]]">
+            domain-changed="[[domainChanged]]">
           </px-vis-axis>
           <px-vis-axis 
             svg="[[layer.0]]" 
@@ -83,8 +91,8 @@
             complete-series-config="[[_seriesConfig]]" 
             muted-series="[[mutedSeries]]" 
             domain-changed="[[domainChanged]]"  
-            draw-series-bar="[[drawSeriesBar]]"
-            label-type-size="9">
+            label-type-size="9"
+            prevent-series-bar="true">
           </px-vis-axis>
           <px-vis-interaction-space
             x-axis-type="time"
@@ -235,12 +243,19 @@
     _generateSeriesConfig: function() {
 
       this.set('_seriesConfig', {
-        'mySeries': {
+        'y0': {
           "name":"My-Series",
           "type": "line",
           "x": 'x',
-          "y": 'y',
+          "y": 'y0',
           'color': this._getColor(0)
+        },
+        'y1': {
+          "name":"My-Other",
+          "type": "line",
+          "x": 'x',
+          "y": 'y1',
+          'color': this._getColor(1)
         }
       })
 
