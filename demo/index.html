@@ -61,7 +61,9 @@
             width="{{props.width.value}}"
             height="{{props.height.value}}"
             data="{{props.data.value}}"
-            prevent-resize="{{props.preventResize.value}}">
+            prevent-resize="{{props.preventResize.value}}"
+            threshold-data="{{props.thresholdData.value}}"
+            threshold-config="{{props.thresholdConfig.value}}">
           </px-vis-spark>
         </div>
       </px-demo-component>
@@ -362,6 +364,35 @@
         inputType: 'code:JSON'
       },
 
+      thresholdConfig: {
+        type: Object,
+        value: {
+          "max":{
+            "color": "blue",
+            "strokeWidth": "2",
+            "dashPattern": "5",
+            "title": "Maximum"
+          },
+          "avg":{
+            "color": "green",
+            "strokeWidth": "1",
+            "dashPattern": "5,2,1,2",
+            "title": "Fleet Average"
+          },
+          "min":{
+            "title": "Min"
+           }
+        }
+      },
+
+      thresholdData:{
+          type : Array,
+          value: [
+            { "for":"y0", "type":"min", "value":0.15 },
+            { "for":"y0", "type":"max", "value":0.50 },
+            { "for":"y0", "type":"avg", "value":0.35 }
+          ],
+        },
     },
 
     listeners: {

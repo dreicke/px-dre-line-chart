@@ -11,6 +11,7 @@
 <link rel="import" href="../px-vis/px-vis-tooltip.html"/>
 <link rel="import" href="../px-vis/px-vis-interaction-space.html"/>
 <link rel="import" href="../px-vis/px-vis-cursor.html"/>
+<link rel="import" href="../px-vis/px-vis-threshold.html"/>
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html" />
 <link rel="import" href="../px-vis/px-vis-behavior-chart.html" />
 <link rel="import" href="../px-vis/px-vis-behavior-d3.html" />
@@ -90,7 +91,8 @@
             label-position="center" 
             complete-series-config="[[_seriesConfig]]" 
             muted-series="[[mutedSeries]]" 
-            domain-changed="[[domainChanged]]">
+            domain-changed="[[domainChanged]]"
+            prevent-series-bar="true">
           </px-vis-axis>
           <px-vis-axis 
             svg="[[layer.0]]" 
@@ -145,6 +147,18 @@
             tooltip-data="[[tooltipData]]"
             selection-type=[[selectionType]]>
           </px-vis-cursor>
+          <px-vis-threshold
+            svg="[[layer.0]]"
+            width="[[width]]"
+            margin="[[margin]]"
+            domain-changed="[[domainChanged]]"
+            y="[[y]]"
+            show-threshold-box="true"
+            threshold-config="[[thresholdConfig]]"
+            complete-series-config="[[_seriesConfig]]"
+            threshold-data="[[thresholdData]]"
+            show-threshold-box="true">
+          </px-vis-threshold>
           
         </div>
         </template>
@@ -230,6 +244,12 @@
       },
       mousePosition:{
         type: Array
+      },
+      thresholdData:{
+        type: Array
+      },
+      thresholdConfig: {
+        type: Object,
       }
     },
 
@@ -259,6 +279,7 @@
 
     ready: function() {
         this.set('numberOfLayers',2);
+        console.log(this.thresholdConfig)
     },
 
     _calcMousePos: function(evt) {
