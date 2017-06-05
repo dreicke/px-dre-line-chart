@@ -63,7 +63,12 @@
             data="{{props.data.value}}"
             prevent-resize="{{props.preventResize.value}}"
             threshold-data="{{props.thresholdData.value}}"
-            threshold-config="{{props.thresholdConfig.value}}">
+            threshold-config="{{props.thresholdConfig.value}}"
+            show-register="{{props.showRegister.value}}"
+            show-the-tooltip="{{props.showTheTooltip.value}}"
+            y-axis-title="{{props.yAxisTitle.value}}"
+            x-axis-title="{{props.xAxisTitle.value}}"
+            number-of-ticks="{{props.numberOfTicks.value}}">
           </px-vis-spark>
         </div>
       </px-demo-component>
@@ -393,6 +398,37 @@
             { "for":"y0", "type":"avg", "value":0.35 }
           ],
         },
+
+      showRegister:{
+        type: Boolean,
+        value: false,
+        inputType: 'toggle'
+      },
+
+      showTheTooltip:{
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      yAxisTitle:{
+        type: String,
+        defaultValue: "Amount",
+        inputType: 'text'
+      },
+
+      xAxisTitle:{
+        type: String,
+        defaultValue: "Time",
+        inputType: 'text'
+      },
+
+      numberOfTicks:{
+        type: Number,
+        defaultValue: 10,
+        inputType: 'text'
+      }
+
     },
 
     listeners: {

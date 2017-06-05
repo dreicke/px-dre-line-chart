@@ -28,6 +28,15 @@
     <style include="px-vis-spark-styles"></style>
       <div id="wrapper" class="wrapper flex" >
         <template>
+        <style>
+            .show{
+                display: block;
+            }
+            .hide{
+                display: none;
+            }
+
+        </style>
         <div class="outline" on-mousemove="_calcMousePos">
           <px-vis-register
             width="[[width]]"
@@ -39,7 +48,8 @@
             muted-series="{{mutedSeries}}"
             x-axis-type="time"
             y-axis-type="linear"
-            chart-data="[[data]]">
+            chart-data="[[data]]"
+            class$="[[_toggleReg(showRegister)]]">
           </px-vis-register>
           <px-vis-svg
             width="[[width]]"
@@ -86,13 +96,14 @@
             margin="[[margin]]" 
             width="[[width]]" 
             height="[[height]]" 
-            title="Amount" 
+            title="[[yAxisTitle]]" 
             orientation="left" 
             label-position="center" 
             complete-series-config="[[_seriesConfig]]" 
             muted-series="[[mutedSeries]]" 
             domain-changed="[[domainChanged]]"
-            prevent-series-bar="true">
+            prevent-series-bar="true"
+            ticks="[[numberOfTicks]]">
           </px-vis-axis>
           <px-vis-axis 
             svg="[[layer.0]]" 
@@ -100,7 +111,7 @@
             margin="[[margin]]" 
             width="[[width]]" 
             height="[[height]]" 
-            title="Time" 
+            title="[[xAxisTitle]]" 
             orientation="bottom" 
             label-position="center" 
             complete-series-config="[[_seriesConfig]]" 
@@ -123,9 +134,10 @@
             extents-data="{{extentsData}}"
             domain-changed="[[domainChanged]]"
             mouse-rect="{{mouseRect}}"
-            series-keys="[[seriesKeys]]">
+            series-keys="[[seriesKeys]]"
+            show-tooltip="false">
           </px-vis-interaction-space>
-<!--           <px-vis-tooltip
+          <px-vis-tooltip
             hover-target=[[mouseRect]]
             mouse-position="[[mousePosition]]"
             width="250"
@@ -135,8 +147,9 @@
             complete-series-config="[[_seriesConfig]]"
             x-axis-type="time"
             tooltip-style="light"
-            muted-series="[[mutedSeries]]">
-          </px-vis-tooltip> -->
+            muted-series="[[mutedSeries]]"
+            hide="[[!showTheTooltip]]">
+          </px-vis-tooltip>
           <px-vis-cursor
             svg="[[layer.1]]"
             width="[[width]]"
@@ -250,8 +263,23 @@
       },
       thresholdConfig: {
         type: Object,
+      },
+      showRegister:{
+        type: Boolean,
+        value: false,
+        observer: '_toggleReg'
+      },
+      showTheTooltip:{
+        type: Boolean,
+        value: false,
+        observer: '_toggleTooltip'
       }
+
     },
+
+    observers: [
+      '_tooltipConfigChanged(tooltipConfig.*, showTooltip)'
+    ],
 
     listeners: {
       'iron-resize': '_onIronResize',
@@ -279,7 +307,24 @@
 
     ready: function() {
         this.set('numberOfLayers',2);
-        console.log(this.thresholdConfig)
+    },
+
+    _toggleReg: function() {         
+        if (this.showRegister) {
+          return "show";
+        }
+        else {
+          return "hide";
+        }
+    },
+
+    _toggleTooltip: function() {
+        if (this.showTheTooltip) {
+          return "true";
+        }
+        else {
+          return "false";
+        }
     },
 
     _calcMousePos: function(evt) {
